@@ -1,0 +1,101 @@
+{% extends 'dashboard/layout.html' %}
+
+{% block content %}
+
+{% load static %}
+
+        <div class="main-container">
+            <!-- page content start -->
+<div class="col-12 col-md-12 col-lg-12">
+                {% for message in messages %}
+                {{ message|safe }}
+                {% endfor %}
+</div>
+
+
+
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="mb-0">Account Number </h6>
+                            </div>
+                        <div class="card-body px-0 pt-0">
+                            <div class="list-group list-group-flush border-top border-color">
+
+<!------>
+<div class="modal-body">
+<center>
+<canvas id="qr-code"></canvas>
+</center>
+
+  <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Account Number" value="{{userAccounts.number}}" id="{{userAccounts.number}}" readonly>
+      <div class="input-group-append">
+          <button class="btn btn-default rounded" type="button" onclick="copy_{{userAccounts.number}}()">Copy</button>
+      </div>
+  </div>
+<b>Label:</b> {{userAccounts.label}}
+
+</div>
+</div>
+<!------>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div class="modal fade" id="viewAccountModal" tabindex="-1" role="dialog" aria-labelledby="viewAccountModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+<center>
+<canvas id="qr-code"></canvas>
+</center>
+
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Account Number" value="{{userInfo.username}}" id="{{userInfo.username}}" readonly>
+                <div class="input-group-append">
+                    <button class="btn btn-default rounded" type="button" onclick="copy_{{userInfo.username}}()">Copy</button>
+                </div>
+            </div>
+<b>Label:</b> Default
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+<script type="text/javascript">
+  function copy_{{userAccounts.number}}() {
+    var copyText = document.getElementById("{{userAccounts.number}}");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999)
+    document.execCommand("copy");
+    //alert("Copied the text: " + copyText.value);
+    alert("{{userAccounts.number}} copied");
+  }
+</script>
+
+    <script>
+      /* JS comes here */
+      var qr;
+      (function() {
+                    qr = new QRious({
+                    element: document.getElementById('qr-code'),
+                    size: 200,
+                    value: '{{userAccounts.number}}'
+                });
+            })();
+    </script>
+  {% endblock %}

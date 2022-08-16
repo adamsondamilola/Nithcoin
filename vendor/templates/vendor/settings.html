@@ -1,0 +1,178 @@
+{% extends 'dashboard/layout.html' %}
+
+{% block content %}
+
+
+
+{% load static %}
+
+        <div class="main-container">
+            <!-- page content start -->
+<div class="col-12 col-md-12 col-lg-12">
+                {% for message in messages %}
+                {{ message|safe }}
+                {% endfor %}
+</div>
+
+
+
+            <div class="container mb-4">
+                <div class="card">
+                    <div class="card-body text-center ">
+                        <div class="row justify-content-equal no-gutters">
+                          <!-- Chart -->
+
+                          <div class="col-12 col-md-12 col-lg-12">
+                            <div class="container-fluid px-0">
+                                   </div>
+                                   <div class="container-fluid top-70 text-center mb-4">
+                                       <div class="avatar avatar-140 rounded-circle mx-auto shadow">
+                                           <div class="background" data-toggle="modal" data-target="#uploadpicModal">
+                                             {% if getVendor.profile == None or getVendor.profile == '' %}
+<img src="/media/dp.jpg" alt="">
+{% else %}
+<img src="/media/{{getVendor.profile}}" alt="">
+                                             {% endif %}
+
+                                           </div>
+                                       </div>
+                                   </div>
+
+                                   <div class="container mb-4 text-center text-blue">
+                                       <h6 class="mb-1">{{getVendor.firstname}} {{getVendor.lastname}}</h6>
+                                       <p>{{getVendor.country}}, {{getVendor.city}}</p>
+                                       <p class="mb-1">{{getVendor.email}}</p>
+                                       <p>{{getVendor.mobile}}, {{getVendor.whatsapp}}</p>
+                                       <p><b>Joined:</b> {{getVendor.date_added|date:'d M, Y'}}</p>
+                                   </div>
+
+                                 </div>
+
+
+
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="mb-0">Account Settings</h6>
+                        </div>
+                        <div class="card-body px-0 pt-0">
+                            <div class="list-group list-group-flush border-top border-color">
+                                <a href="#" class="list-group-item list-group-item-action border-color" data-toggle="modal" data-target="#buySellModal">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <div class="avatar avatar-50 bg-default-light text-default rounded">
+                                                <span class="material-icons">account_balance</span>
+                                            </div>
+                                        </div>
+                                        <div class="col align-self-center pl-0">
+                                            <h6 class="mb-1">Buy and Sell</h6>
+                                            <p class="text-secondary">Set preffered methods</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action border-color" data-toggle="modal" data-target="#paymentMethodModal">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <div class="avatar avatar-50 bg-default-light text-default rounded">
+                                                <span class="material-icons">museum</span>
+                                            </div>
+                                        </div>
+                                        <div class="col align-self-center pl-0">
+                                            <h6 class="mb-1">Payment Mode</h6>
+                                            <p class="text-secondary">Methods of receiving payment</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action border-color" data-toggle="modal" data-target="#resetPasswordModal">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <div class="avatar avatar-50 bg-default-light text-default rounded">
+                                                <span class="material-icons">lock_open</span>
+                                            </div>
+                                        </div>
+                                        <div class="col align-self-center pl-0">
+                                            <h6 class="mb-1">Password</h6>
+                                            <p class="text-secondary">Change Password</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action border-color" data-toggle="modal" data-target="#resetPinModal">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <div class="avatar avatar-50 bg-default-light text-default rounded">
+                                                <span class="material-icons">screen_lock_portrait</span>
+                                            </div>
+                                        </div>
+                                        <div class="col align-self-center pl-0">
+                                            <h6 class="mb-1">Transaction PIN</h6>
+                                            <p class="text-secondary">Change PIN</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="/account/numbers" class="list-group-item list-group-item-action border-color">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <div class="avatar avatar-50 bg-default-light text-default rounded">
+                                                <span class="material-icons">account_balance_wallet</span>
+                                            </div>
+                                        </div>
+                                        <div class="col align-self-center pl-0">
+                                            <h6 class="mb-1">Account Numbers</h6>
+                                            <p class="text-secondary">Create new Account Number</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action border-color" data-toggle="modal" data-target="#logOutDevicesModal">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <div class="avatar avatar-50 bg-default-light text-default rounded">
+                                                <span class="material-icons">app_blocking</span>
+                                            </div>
+                                        </div>
+                                        <div class="col align-self-center pl-0">
+                                            <h6 class="mb-1">Logout Devices</h6>
+                                            <p class="text-secondary">Logout from Other Devices</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            </div>
+            </div>
+        </div>
+
+    </main>
+
+    {% include 'vendor/uploadpic.html' %}
+    {% include 'vendor/logout_devices.html' %}
+    {% include 'vendor/password.html' %}
+    {% include 'vendor/pin.html' %}
+    {% include 'vendor/buy_sell_setting.html' %}
+    {% include 'vendor/payment_method.html' %}
+
+
+<!--Preview Image--->
+<script type='text/javascript'>
+function preview_image(event)
+{
+ var reader = new FileReader();
+ reader.onload = function()
+ {
+  var outputImg = document.getElementById('output_image');
+  outputImg.src = reader.result;
+ }
+ reader.readAsDataURL(event.target.files[0]);
+}
+</script>
+
+  {% endblock %}

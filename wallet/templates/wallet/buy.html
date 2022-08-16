@@ -1,0 +1,141 @@
+{% extends 'dashboard/layout.html' %}
+
+{% block content %}
+
+
+
+{% load static %}
+
+        <div class="main-container">
+            <!-- page content start -->
+<div class="col-12 col-md-12 col-lg-12">
+                {% for message in messages %}
+                {{ message|safe }}
+                {% endfor %}
+</div>
+
+
+            <div class="container mb-4">
+                <div class="card">
+                    <div class="card-body text-left">
+                        <div class="row justify-content-equal no-gutters">
+                          <!-- Chart -->
+
+                          <div class="col-12 col-md-12 col-lg-12">
+                            <form method="POST" id="searchVendor" action="">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Find Vendor Near You</label>
+
+<!--                                                            <select name="country" class="form-control countrypicker" data-flag="true" id="exampleFormControlSelect1">
+                                                            </select> -->
+{% include 'wallet/countries.html' %}
+
+                                      <br><button type="submit" class="btn btn-outline-primary btn-lg btn-block">Search</button>
+                                                        </div>
+
+</form>
+
+{% if listVendors %}
+<ul class="list-group list-group-flush">
+    <li class="list-group-item">
+        <div class="row align-items-center">
+            <div class="col-auto pr-0">
+                <div class="avatar avatar-40 rounded">
+                    <div class="background">
+<!--                        <img src="/media/proofs/7.jpg" alt=""> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col align-self-center pr-0">
+                <h6 class="font-weight-normal mb-1">Name</h6>
+            </div>
+            <div class="col-auto">
+              <h6 class="font-weight-normal mb-1">Selling</h6>
+            </div>
+        </div>
+    </li>
+</ul>
+{% for listVendor in listVendors %}
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <div class="row align-items-left">
+                                    <div class="col-auto pr-0">
+                                        <div class="avatar avatar-40 rounded">
+                                            <div class="background">
+                                              {% if getVendor.profile == None or getVendor.profile == '' %}
+ <img src="/media/dp.jpg" alt="">
+ {% else %}
+ <img src="/media/{{listVendor.profile}}" alt="">
+                                              {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col align-self-left pr-0">
+                                      <a href="/vendor/{{listVendor.user_id}}">  <h6 class="font-weight-normal mb-1">{{ listVendor.firstname }} {{listVendor.lastname}}</h6></a>
+                                        <p class="small text-secondary"><b>Joined: </b>{{listVendor.date_added|date:'d M, Y'}}</p>
+                                    </div>
+                                    <div class="col-auto">
+                                        <h6 class="text-success"><font style="color:gray;">%{{listVendor.selling_at}}</font> <span class="material-icons">arrow_upward</span></h6>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+
+{% endfor %}
+{% endif %}
+
+              <div class="" id="output"></div>
+                                                    </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            </div>
+            </div>
+        </div>
+    </main>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript">
+        $('#searchVendor').on('submit', function(e){
+        e.preventDefault();
+
+        var fields = $("#searchVendor")
+var countrySelected = $('#country').val();
+
+      $.ajax({
+           type : "POST",
+           url: "{% url 'buy' %}",
+           data: fields.serialize(),
+           success: function(data){
+          //countrySelected: $('#country').val()
+
+    //        alert("Update Was Successful");
+            $('#output').html(data.msg)
+
+            var ckStatus = data.status
+
+            if(ckStatus == 1)
+            {
+              window.location = "/buy/search/" + countrySelected;
+            }
+
+           },
+
+           failure: function() {
+               alert("Something went wrong");
+           }
+
+
+       });
+
+            });
+    </script>
+  {% endblock %}

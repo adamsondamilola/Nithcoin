@@ -1,0 +1,28 @@
+<div class="modal fade" id="uploadpicModal" tabindex="-1" role="dialog" aria-labelledby="uploadpicModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form method="POST" action="" enctype="multipart/form-data">
+      {% csrf_token %}
+<input type="hidden" name="uploadpic" value="uploadpic">
+<br>
+<div class="single-product-image">
+<input type='file' id="getFile" name="profile" style="display:none" onchange="preview_image(event)" accept="image/*" capture>
+<center>
+  {% if getUser.profile == None or getUser.profile == '' %}
+<img src="/media/dp.jpg" alt="" width="320" height="320" id="output_image" onclick="document.getElementById('getFile').click()">
+{% else %}
+<img src="/media/{{getUser.profile}}" alt="" width="320" height="320" id="output_image" onclick="document.getElementById('getFile').click()">
+</center>
+{% endif %}
+
+                            </div>
+
+<br>
+<button type="submit" class="btn btn-outline-primary btn-lg btn-block">Upload</button>
+
+</form>
+      </div>
+    </div>
+  </div>
+</div>

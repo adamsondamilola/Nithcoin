@@ -1,0 +1,128 @@
+<div class="modal fade" id="sendModal" tabindex="-1" role="dialog" aria-labelledby="sendModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+        <form method="POST" action="" id="sendForm">
+              {% csrf_token %}
+        <input type="hidden" name="send" value="send">
+
+        <div class="input-group mb-3">
+        <div class="input-group-prepend">
+        <span class="input-group-text">USD</span>
+        </div>
+        <input type="number" class="form-control" value="" placeholder="Enter Amount" name="amount" id="amount" oninput="calcFunction()">
+        </div>
+
+        <div class="input-group mb-3">
+        <div class="input-group-prepend">
+        <span class="input-group-text">NTC</span>
+        </div>
+        <input type="text" class="form-control" value="" placeholder="Amount in NTC" id="calResult" readonly>
+        </div>
+
+        <div class="input-group mb-3">
+        <div class="input-group-prepend">
+        <span class="input-group-text"><span class="material-icons icon">account_balance_wallet</span></span>
+        </div>
+        <input type="tel" class="form-control" value="" placeholder="Account Number" name="account_number" id="account_number">
+        <div class="input-group-prepend">
+                                                                <span class="input-group-text"><span class="material-icons icon">qr_code_2</span></span>
+                                                                </div>
+        </div>
+
+        <div class="input-group mb-3">
+        <div class="input-group-prepend">
+        <span class="input-group-text"><span>Select Wallet</span></span>
+        </div>
+        <select class="form-control" name="wallet" id="wallet">
+        <option value="{{defaultAccount.number}}">{{defaultAccount.number}} ({{defaultAccount.balance}} NTC)</option>
+        {% if allAccount %}
+        {% for a in allAccount %}
+        {% if a.balance > 0 %}
+        <option value="{{a.number}}">{{a.number}} ({{a.balance}} NTC)</option>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        </select>
+        </div>
+
+        <div class="col">
+          <div id="outputr"></div>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Send</button>
+        </div>
+        </form>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--- For Ajax Form  --->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<script type="text/javascript">
+  function calcFunction()
+  {
+      var p1 = $('#amount').val();
+      var p2 = {{current_price.usd}}
+      if(p1=='' || p2=='')
+      {
+          $('#calResult') = 0;
+      }
+      else
+      {
+          var p3 = p1/p2;
+          $('#calResult').val(p3);
+      }
+  }
+</script>
+
+<script type="text/javascript">
+
+  $('#sendForm').on('submit', function(e){
+  e.preventDefault();
+
+  var fields = $("#sendForm")
+
+$.ajax({
+     type : "POST",
+     url: "/send",
+     data: fields.serialize(),
+     success: function(data){
+//        alert("Update Was Successful");
+      $('#outputr').html(data.msg)
+
+      var ckStatus = data.status
+      var amt = $('#amount').val()
+      var acc = $('#account_number').val()
+      var wal = $('#wallet').val()
+
+      if(ckStatus == 1)
+      {
+        window.location = "/send/"+amt+"/"+acc+"/"+wal;
+      }
+
+     },
+
+     failure: function() {
+         alert("Something went wrong");
+     }
+
+ });
+
+      });
+
+
+
+  $('.toAdd').live('change', function() {
+  var total = 0;
+
+  $('.toAdd').each(function () {
+    total += $(this).val();
+  });
+
+  $('#total').val(total);
+});
+</script>

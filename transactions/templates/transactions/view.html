@@ -1,0 +1,121 @@
+
+
+{% extends 'dashboard/no_menu.html' %}
+
+{% block content %}
+
+
+{% load static %}
+
+        <div class="main-container">
+            <!-- page content start -->
+<div class="col-12 col-md-12 col-lg-12">
+                {% for message in messages %}
+                {{ message|safe }}
+                {% endfor %}
+</div>
+
+
+
+
+                          <div class="col-12 col-md-12 col-lg-12">
+
+                            <div class="container">
+                                            <div class="row text-center mt-3">
+                                                <div class="col-12 col-md-8">
+                                                    <div class="card border-0 mb-4">
+                                                        <div class="card-body">
+
+                                                          <div class="card border-0 mb-4">
+                                                              <div class="card-body">
+
+                                                                <ul class="list-group list-group-flush">
+
+                                                                  {% if userTrans %}
+
+                                                                  <li class="list-group-item">
+                                                                              <div class="row align-items-left">
+                                                                                  <div class="col-auto pr-0">
+                                                                                      <div class="avatar avatar-40 rounded">
+                                                                                          <div class="background">
+                                                                                            <span class="material-icons">call_received</span>
+                                                                                          </div>
+                                                                                      </div>
+                                                                                  </div>
+                                                                                  <div class="col align-left-center pr-0">
+                                                                                      <h6 class="font-weight-normal mb-1">{{userTrans.receiver}}</h6>
+                                                                                      <p class="small text-secondary">Receiver</p>
+                                                                                  </div>
+                                                                                  <div class="col-auto">
+                                                                                      <h6 class="text-primary">{{userTrans.amount}} NTC</h6>
+                                                                                      <h6 class="text-success">{{amtInUsd}} USD</h6>
+                                                                                  </div>
+                                                                              </div>
+                                                                          </li>
+                                                                          <li class="list-group-item">
+                                                                                      <div class="row align-items-left">
+                                                                                          <div class="col-auto pr-0">
+                                                                                              <div class="avatar avatar-40 rounded">
+                                                                                                  <div class="background">
+                                                                                                    <span class="material-icons">send</span>
+                                                                                                  </div>
+                                                                                              </div>
+                                                                                          </div>
+                                                                                          <div class="col align-left-center pr-0">
+                                                                                              <h6 class="font-weight-normal mb-1">{{userTrans.sender}}</h6>
+                                                                                              <p class="small text-secondary">Sender</p>
+                                                                                          </div>
+                                                                                          <div class="col-auto">
+                                                                                              <h6 class="text-primary">{{userTrans.amount}} NTC</h6>
+                                                                                              <h6 class="text-success">{{amtInUsd}} USD</h6>
+                                                                                          </div>
+                                                                                      </div>
+                                                                                  </li>
+                                                                                  <li class="list-group-item">
+                                                                                              <div class="row align-items-left">
+                                                                                                  <div class="col-auto pr-0">
+                                                                                                      <div class="avatar avatar-40 rounded">
+                                                                                                          <div class="background">
+                                                                                                            <span class="material-icons">access_time</span>
+                                                                                                          </div>
+                                                                                                      </div>
+                                                                                                  </div>
+                                                                                                  <div class="col align-left-center pr-0">
+                                                                                                      <h6 class="font-weight-normal mb-1">{{userTrans.date_added}}</h6>
+                                                                                                      <p class="small text-secondary">Date</p>
+                                                                                                  </div>
+                                                                                                  <div class="col-auto">
+
+                                                                                                  </div>
+                                                                                              </div>
+                                                                                          </li>
+
+                                                                                  {% else %}
+                                                                                  No transaction
+                                                                                  {% endif %}
+                                                                                            </ul>
+
+                                                              </div>
+                                                          </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-4">
+                                                    <div class="card border-0 text-left mb-4">
+                                                        <div class="card-body">
+ADS Space
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+            </div>
+            </div>
+        </div>
+    </main>
+
+  {% endblock %}

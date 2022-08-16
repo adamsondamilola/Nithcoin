@@ -1,0 +1,1 @@
+from nithcoin.wsgi import application

@@ -1,0 +1,102 @@
+
+
+{% extends 'dashboard/no_menu.html' %}
+
+{% block content %}
+
+
+{% load static %}
+
+        <div class="main-container">
+            <!-- page content start -->
+<div class="col-12 col-md-12 col-lg-12">
+                {% for message in messages %}
+                {{ message|safe }}
+                {% endfor %}
+</div>
+
+
+
+
+                          <div class="col-12 col-md-12 col-lg-12">
+
+                            <div class="container">
+                                            <div class="row text-center mt-3">
+                                                <div class="col-12 col-md-8">
+                                                    <div class="card border-0 mb-4">
+                                                        <div class="card-body">
+
+                                                          <div class="card border-0 mb-4">
+                                                              <div class="card-body">
+
+                                                                <ul class="list-group list-group-flush">
+
+                                                                  {% if userTrans %}
+                                                                  {% for u in userTrans %}
+                                                                                        <a href="/transactions/{{u.id}}/{{u.transaction_id}}/view" target="blank">    <li class="list-group-item">
+                                                                                                <div class="row align-items-left">
+                                                                                                    <div class="col-auto pr-0">
+                                                                                                        <div class="avatar avatar-40 rounded">
+                                                                                                            <div class="background">
+                                                                                                              <span class="material-icons">assessment</span>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col align-left-center pr-0">
+                                                                                                        <h6 class="font-weight-normal mb-1">{{u.receiver}}</h6>
+                                                                                                        <p class="small text-secondary">{{u.date_added}}</p>
+                                                                                                    </div>
+                                                                                                    <div class="col-auto">
+                                                                                                        <h6 class="text-success">{{u.amount}} NTC</h6>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </li>
+                                                                                            </a>
+                                                                                  {% endfor %}
+                                                                                  {% else %}
+                                                                                  No transaction
+                                                                                  {% endif %}
+                                                                                            </ul>
+
+                                                              </div>
+                                                          </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-4">
+                                                    <div class="card border-0 text-left mb-4">
+                                                        <div class="card-body">
+                                                          <ul class="nav nav-pills flex-column">
+                                                                         <li class="nav-item">
+                                                                             <a class="nav-link" href="/">
+                                                                                 <div>
+                                                                                  <span class="material-icons icon">account_balance</span>
+                                                                                     Dashboard
+                                                                                 </div>
+                                                                             </a>
+                                                                         </li>
+                                                                         <li class="nav-item">
+                                                                             <a class="nav-link" href="/settings">
+                                                                                 <div>
+                                                                                     <span class="material-icons icon">settings</span>
+                                                                                     Settings
+                                                                                 </div>
+                                                                             </a>
+                                                                         </li>
+                                                                         </ul>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+            </div>
+            </div>
+        </div>
+    </main>
+
+  {% endblock %}

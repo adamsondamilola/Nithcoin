@@ -1,0 +1,86 @@
+
+<ul class="nav nav-pills flex-column">
+               <li class="nav-item">
+                       <div>
+You are about to send <b>{{amt}} USD</b> of NTC to <b>{{acc}}</b>
+                       </div>
+               </li>
+               <li class="nav-item">
+                   <a class="nav-link" href="#">
+                       <div>
+Please, note that this is irreversible.
+                       </div>
+                   </a>
+               </li>
+               </ul>
+
+
+
+<form method="POST" action="" id="sendForm2">
+      {% csrf_token %}
+<input type="hidden" name="confirm_send" value="confirm_send">
+
+<div class="input-group mb-3">
+<div class="input-group-prepend">
+<span class="input-group-text"><span class="material-icons">screen_lock_portrait</span></span>
+</div>
+<input maxlength="4" type="password" class="form-control" placeholder="Enter PIN" aria-label="PIN" name="pin">
+</div>
+
+<div class="col">
+  <div id="outputr2"></div>
+<button type="submit" class="btn btn-primary btn-lg btn-block"> Confirm Send</button>
+</div>
+</form>
+
+<!--- For Ajax Form  --->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<!-- Sweetalert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script type="text/javascript">
+  $('#sendForm2').on('submit', function(e){
+  e.preventDefault();
+
+  var fields = $("#sendForm2")
+
+$.ajax({
+     type : "POST",
+     url: "",
+     data: fields.serialize(),
+     success: function(data){
+//        alert("Update Was Successful");
+      $('#outputr2').html(data.msg)
+
+      var ckStatus = data.status
+      var amt = $('#amount').val()
+      var acc = $('#account_number').val()
+      var wal = $('#wallet').val()
+
+      if(ckStatus == 2)
+      {
+
+        Swal.fire({
+        title: 'Sent!',
+        text: 'Transaction Was Successful',
+        icon: 'success',
+        confirmButtonText: 'Cool'
+      })
+
+      window.location = "/dashboard";
+
+      }
+
+     },
+
+     failure: function() {
+         alert("Something went wrong");
+     }
+
+ });
+
+      });
+
+
+</script>

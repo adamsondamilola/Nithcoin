@@ -1,0 +1,52 @@
+<div class="modal fade" id="logOutDevicesModal" tabindex="-1" role="dialog" aria-labelledby="logOutDevicesModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form method="POST" action="" id="logoutDevices">
+      {% csrf_token %}
+<input type="hidden" name="logout_devices" value="logout_devices">
+<br>
+<div id="output"></div>
+<br>
+<p>You are about to logout from other devices. Please, note that this does not log you out of this device</p>
+<button type="submit" class="btn btn-danger btn-lg btn-block">Confirm Logout</button>
+
+</form>
+      </div>
+    </div>
+  </div>
+</div>
+<!--- For Ajax Form  --->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript">
+    $('#logoutDevices').on('submit', function(e){
+    e.preventDefault();
+
+    var fields = $("#logoutDevices")
+
+  $.ajax({
+       type : "POST",
+       url: "/settings/user",
+       data: fields.serialize(),
+       success: function(data){
+//        alert("Update Was Successful");
+        $('#output').html(data.msg)
+/*
+        var ckStatus = data.status
+
+        if(ckStatus == 1)
+        {
+          window.location = "/newvendor";
+        }
+*/
+       },
+
+       failure: function() {
+           alert("Something went wrong");
+       }
+
+
+   });
+
+        });
+</script>

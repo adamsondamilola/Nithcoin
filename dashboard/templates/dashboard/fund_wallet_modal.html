@@ -1,0 +1,96 @@
+<!-- Fund Wallet Modal -->
+<div class="modal fade" id="fundWalletModal" tabindex="-1" role="dialog" aria-labelledby="fundWalletModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+    <!--  <div class="modal-header" style="background-color: lightblue;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <div class="modal-body">
+
+<br>
+                       <div class="input-group mb-3">
+                           <input type="text" class="form-control" placeholder="refferal Link" value="edcrfv" id="btc" readonly>
+                           <div class="input-group-append">
+                               <button class="btn btn-default rounded" type="button" onclick="copyBTC()">Copy BTC Address</button>
+                           </div>
+                       </div>
+
+                                      <div class="input-group mb-3">
+                                          <input type="text" class="form-control" placeholder="refferal Link" value="qazwsxedc" id="eth" readonly>
+                                          <div class="input-group-append">
+                                              <button class="btn btn-default rounded" type="button" onclick="copyETH()">Copy ETH Address</button>
+                                          </div>
+                                      </div>
+
+<br>
+<form method="POST" action="" enctype="multipart/form-data">
+{% csrf_token %}
+
+<h6>Payment sent?</h6>
+<div id="outputUploadForm"></div>
+      <div class="input-group">
+       <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupPrepend"><span class="material-icons">attach_file</span></span>
+        </div>
+<!-- <button type="button" class="btn btn-outline-primary btn-lg btn-block" onclick="document.getElementById('getFile').click()">Upload Proof of Payment</button>
+  <input type='file' id="getFile" name="uploadPOP" style="display:none" onchange="form.submit()"> -->
+    <input type='file' id="pop" class="form-control" name="pop">
+    </div>
+          <br><button type="submit" class="btn btn-outline-primary btn-lg btn-block">Upload Proof of Payment</button>
+          </form>
+<hr><br><h6>No Bitcoin and Etherium?</h6>
+<a href="/buy"> <button type="button" class="btn btn-secondary btn-lg btn-block">Buy NTC from a Vendor</button> </a>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript">
+    $('#uploadForm').on('submit', function(e){
+    e.preventDefault();
+
+    var fields = $("#uploadForm")
+
+  $.ajax({
+       type : "POST",
+       url: "{% url 'dashboard' %}",
+       data: fields.serialize(),
+       success: function(data){
+//        alert("Update Was Successful");
+        $('#outputUploadForm').html(data.msg)
+
+       },
+
+       failure: function() {
+           alert("Something went wrong");
+       }
+
+
+   });
+
+        });
+</script>
+
+<script>
+function copyBTC() {
+  var copyText = document.getElementById("btc");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999)
+  document.execCommand("copy");
+  //alert("Copied the text: " + copyText.value);
+  alert("Bitcoin wallet address copied");
+}
+
+function copyETH() {
+  var copyText = document.getElementById("eth");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999)
+  document.execCommand("copy");
+  //alert("Copied the text: " + copyText.value);
+  alert("Etherium wallet address copied");
+}
+</script>

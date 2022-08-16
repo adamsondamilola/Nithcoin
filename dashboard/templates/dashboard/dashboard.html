@@ -1,0 +1,267 @@
+{% extends 'dashboard/layout.html' %}
+
+{% block content %}
+
+{% load static %}
+
+        <div class="main-container">
+            <!-- page content start -->
+<div class="col-12 col-md-12 col-lg-12">
+                {% for message in messages %}
+                {{ message|safe }}
+                {% endfor %}
+</div>
+
+            <div class="container mb-4 text-center">
+                <div class="card bg-primary shadow-default">
+                    <div class="card-body">
+                        <!-- Swiper -->
+                        <div class="swiper-container addsendcarousel text-center">
+                            <div class="swiper-wrapper mb-4">
+                                <a href="#" class="swiper-slide text-white" data-toggle="modal" data-target="#fundWalletModal">
+                                    <div class="icon icon-50 rounded-circle mb-2 bg-white-light"><span class="material-icons">add</span></div>
+                                    <p><small>Fund Wallet</small></p>
+                                </a>
+                                <a href="#" class="swiper-slide text-white" data-toggle="modal" data-target="#sendModal">
+                                    <div class="icon icon-50 rounded-circle mb-2 bg-white-light"><span class="material-icons">call_made</span></div>
+                                    <p><small>Send</small></p>
+                                </a>
+                                <a href="#" class="swiper-slide text-white" data-toggle="modal" data-target="#withdrawModal">
+                                    <div class="icon icon-50 rounded-circle mb-2 bg-white-light"><span class="material-icons">call_received</span></div>
+                                    <p><small>Withdraw</small></p>
+                                </a>
+                                <a href="#" class="swiper-slide text-white" data-toggle="modal" data-target="#swapModal">
+                                    <div class="icon icon-50 rounded-circle mb-2 bg-white-light"><span class="material-icons">swap_horiz</span></div>
+                                    <p><small>Swap</small></p>
+                                </a>
+                                <a href="transactions.html" class="swiper-slide text-white">
+                                    <div class="icon icon-50 rounded-circle mb-2 bg-white-light"><span class="material-icons">class</span></div>
+                                    <p><small>Passbuk</small></p>
+                                </a>
+                                <a href="" class="swiper-slide text-white">
+                                    <div class="icon icon-50 rounded-circle mb-2 bg-white-light"><span class="material-icons">receipt</span></div>
+                                    <p><small>Receipt</small></p>
+                                </a>
+                            </div>
+                            <!-- Add Pagination -->
+<!--                            <div class="swiper-pagination"></div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+<!--            <div class="container mb-4">
+                <div class="card">
+                    <div class="card-body text-center ">
+                        <div class="row justify-content-equal no-gutters">
+                          <!-- Chart -->
+<!--
+                          <div class="col-12 col-md-12 col-lg-12">
+                                                  <div class="card mb-12">
+                                                      <div class="card-body">
+                                                          <div class="tab-content">
+                                                              <div class="tab-pane fade active show" id="tabhome126" role="tabpanel" aria-labelledby="tabhome126-tab">
+                                                                  <h6>Last 7 Days Chart</h6>
+                                                                  <canvas id="line-chart" width="800" height="450"></canvas>
+                                                              </div>
+                                                              <div class="tab-pane fade" id="tabhome226" role="tabpanel" aria-labelledby="tabhome226-tab">
+                                                                  <h6>Last 1 30 Chart</h6>
+                                                                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. </p>
+                                                              </div>
+                                                              <div class="tab-pane" id="tabhome326" role="tabpanel" aria-labelledby="tabhome326-tab">
+                                                                  <h6>Last 1 Year Chart</h6>
+                                                                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                      <div class="card-footer">
+                                                          <ul class="nav nav-tabs" role="tablist">
+                                                              <li class="nav-item">
+                                                                  <a class="nav-link active" id="tabhome126-tab" data-toggle="tab" href="#tabhome126" role="tab" aria-controls="tabhome126" aria-selected="true">
+                                                                      Last 7 Days
+                                                                  </a>
+                                                              </li>
+                                                              <li class="nav-item">
+                                                                  <a class="nav-link" id="tabhome226-tab" data-toggle="tab" href="#tabhome226" role="tab" aria-controls="tabhome226" aria-selected="false">
+                                                                      Last 1 Month
+                                                                  </a>
+                                                              </li>
+                                                              <li class="nav-item">
+                                                                  <a class="nav-link" id="tabhome326-tab" data-toggle="tab" href="#tabhome326" role="tab" aria-controls="tabhome326" aria-selected="false">
+                                                                      Last 1 Year
+                                                                  </a>
+                                                              </li>
+                                                          </ul>
+                                                      </div>
+                                                      </div>
+                                                      </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="container mb-4">
+                <div class="row">
+                    <div class="col">
+                        <h6 class="subtitle mb-3">Wallets </h6>
+                    </div>
+                    <div class="col-auto"><a href="#" class="text-default">View all</a></div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="card border-0 mb-4">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-auto pr-0">
+                                        <div class="avatar avatar-50 border-0 bg-default-light rounded-circle text-default">
+                                            <i class="material-icons vm text-template">local_atm</i>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 align-self-center">
+                                        <h6 class="mb-1">{{siteSet.symbol}}</h6>
+                                        <p class="small text-secondary">{{siteSet.title}}</p>
+                                    </div>
+                                    <div class="col-auto align-self-center border-left">
+                                        <h6 class="mb-1">{{userWallet.balance|floatformat:5}} NTC</h6>
+                                        <p class="small text-secondary"><hr></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="card border-0">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-auto pr-0">
+                                        <div class="avatar avatar-50 border-0 bg-default-light rounded-circle text-default">
+                                            <i class="material-icons vm text-template">local_atm</i>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 align-self-center">
+                                        <h6 class="mb-1">USD</h6>
+                                        <p class="small text-secondary">Local currency</p>
+                                    </div>
+                                    <div class="col-auto align-self-center border-left">
+                                        <h6 class="mb-1">$ {{walletUSD|floatformat:2}}</h6>
+                                        <p class="small text-secondary"><hr></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6"><br>
+                        <div class="card border-0">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-auto pr-0">
+                                        <div class="avatar avatar-50 border-0 bg-default-light rounded-circle text-default">
+                                            <i class="material-icons vm text-template">local_atm</i>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 align-self-center">
+                                        <h6 class="mb-1">COMMISSION</h6>
+                                        <p class="small text-secondary">unclaimed</p>
+                                    </div>
+                                    <div class="col-auto align-self-center border-left">
+                                        <h6 class="mb-1">{{userWallet.commission|floatformat:5}} NTC</h6>
+                                        <p class="small text-secondary"><hr></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PWA add to home display -->
+<!--            <div class="container mb-4">
+                <div class="card" id="addtodevice">
+                    <div class="card-body text-center">
+                        <div class="row mb-3">
+                            <div class="col-10 col-md-4 mx-auto"><img src="{% static 'dashboard/img/install-app.png' %}" alt="" class="mw-100"></div>
+                        </div>
+
+                        <h5 class="text-dark">Install on <span class="font-weight-bold">Android</span></h5>
+                        <p class="text-secondary">For more user experience.</p>
+                        <button class="btn btn-sm btn-default px-4 rounded" id="addtohome">Install</button>
+                    </div>
+                </div>
+            </div> -->
+            <!-- PWA add to home display -->
+
+
+            </div>
+            </div>
+        </div>
+    </main>
+
+<!-- Fund wallet modal -->
+{% include 'dashboard/fund_wallet_modal.html' %}
+{% include 'dashboard/send_modal.html' %}
+{% include 'dashboard/withdraw_modal.html' %}
+{% include 'dashboard/swap_modal.html' %}
+    <script>
+/*
+      var form_fields = document.getElementsByTagName('input')
+      form_fields[1].placeholder='Email';
+      form_fields[2].placeholder='Password';
+      form_fields[3].placeholder='Repeat Password';
+
+      for(var field in form_fields)
+      {
+        form_fields[field].className += ' form-control'
+      }
+  */
+
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+    <script type="text/javascript">
+      new Chart(document.getElementById("line-chart"), {
+    type: 'line',
+    data: {
+      labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+      datasets: [{
+          data: [86,114,106,106,107,111,133,221,783,2478],
+          label: "Africa",
+          borderColor: "#3e95cd",
+          fill: false
+        }, {
+          data: [282,350,411,502,635,809,947,1402,3700,5267],
+          label: "Asia",
+          borderColor: "#8e5ea2",
+          fill: false
+        }, {
+          data: [168,170,178,190,203,276,408,547,675,734],
+          label: "Europe",
+          borderColor: "#3cba9f",
+          fill: false
+        }, {
+          data: [40,20,10,16,24,38,74,167,508,784],
+          label: "Latin America",
+          borderColor: "#e8c3b9",
+          fill: false
+        }, {
+          data: [6,3,2,2,7,26,82,172,312,433],
+          label: "North America",
+          borderColor: "#c45850",
+          fill: false
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'World population per region (in millions)'
+      }
+    }
+  });
+
+    </script>
+
+
+  {% endblock %}

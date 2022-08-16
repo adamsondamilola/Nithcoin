@@ -1,0 +1,78 @@
+{% extends 'dashboard/layout.html' %}
+
+{% block content %}
+
+{% load static %}
+
+        <div class="main-container">
+            <!-- page content start -->
+<div class="col-12 col-md-12 col-lg-12">
+                {% for message in messages %}
+                {{ message|safe }}
+                {% endfor %}
+</div>
+
+            <div class="container mb-4">
+                <div class="row">
+                </div>
+                <div class="row">
+
+                  <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Account Number" value="https://{{siteSet.address}}/invite/{{request.user}}" id="copy" readonly>
+                      <div class="input-group-append">
+                          <button class="btn btn-default rounded" type="button" onclick="copy_link()">Copy</button>
+                      </div>
+                  </div>
+
+
+                    <div class="col-12 col-md-12">
+                        <div class="card border-0 mb-4">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+
+<table class="table">
+  <tr>
+    <th>Invited</th>
+    <th>Status</th>
+    <th>Date</th>
+    </tr>
+    {% if ref %}
+    {% for r in ref %}
+    {% for u in getUsers %}
+    {% if r.invited == u.id %}
+    <tr>
+      <td>{{u.username}}</td>
+      <td>{% if r.status == 0 %}---{% else %} Activated {% endif %}</td>
+      <td>{{r.date_added|date:'d F, Y'}}</td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+      {% endfor %}
+    {% endif %}
+  </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="text/javascript">
+      function copy_link() {
+        var copyText = document.getElementById("copy");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999)
+        document.execCommand("copy");
+        //alert("Copied the text: " + copyText.value);
+        alert("Link copied");
+      }
+    </script>
+
+  {% endblock %}

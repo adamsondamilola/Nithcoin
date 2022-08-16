@@ -1,0 +1,160 @@
+{% extends 'dashboard/layout.html' %}
+
+{% block content %}
+
+
+
+{% load static %}
+
+        <div class="main-container">
+            <!-- page content start -->
+<div class="col-12 col-md-12 col-lg-12">
+                {% for message in messages %}
+                {{ message|safe }}
+                {% endfor %}
+</div>
+
+
+
+
+                          <div class="col-12 col-md-12 col-lg-12">
+
+                            <form method="POST" id="amountForm" action="">
+                            {% csrf_token %}
+                            <div class="card border-0">
+                                                <div class="card-header">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-auto pr-0">
+                                                            <div data-toggle="modal" data-target="#viewDpModal" class="avatar avatar-40 border-0 bg-warning-light rounded-circle text-warning">
+                                                              {% if listVendors.profile == None or listVendors.profile == '' %}
+                                                              <img src="/media/dp.jpg" alt="">
+                                                              {% else %}
+                                                              <img src="/media/{{listVendor.profile}}" alt="">
+                                                              {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col align-self-center  pr-0">
+                                                            <h6 class="mb-0">{{listVendors.firstname}} {{listVendors.lastname}}</h6>
+                                                            <p class="text-secondary">{{discount_sell}}% Discount</p>
+                                                        </div>
+                                                        <div class="col-auto align-self-center  pl-0">
+<!--                                                        <a href="/messenger/{{listVendors.user_id}}/contact"    <button type="button" class="btn btn-sm btn-default rounded">Contact</button> </a> -->
+<a href='https://api.whatsapp.com/send?phone={{listVendors.whatsapp|slice:"1:"}}&text=Hi,%20{{listVendors.firstname}}. Please,%20I%20want%20to%20sale%20Nithcoin' <button type="button" class="btn btn-sm btn-default rounded">Contact</button> </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body  bg-warning-light">
+
+                                                  <div class="input-group mb-3">
+                                                  <div class="input-group-prepend">
+                                                  <span class="input-group-text">USD</span>
+                                                  </div>
+                                                  <input type="number" class="form-control" value="" placeholder="Amount" name="amount" id="minimum" oninput="myFunction()">
+                                                  </div>
+
+                                                    <h1 class=" text-center mb-0 display-4">Buying at $ <span id="calResult"></span> </h1>
+                                                    <p class="text-center mb-0 display-7">Selling at %{{listVendors.selling_at}} <span class="material-icons">arrow_upward</span></p>
+                                                </div>
+                                                <div class="card-footer  bg-info text-white">
+                                                    <div class="row align-items-center">
+                                                        <div class="col">
+                                                            <p class="small">Member since</p>
+                                                            <p class="mb-0">{{listVendors.date_added|date:'d M, Y'}}</p>
+                                                        </div>
+                                                        <div class="col-auto align-self-center text-right">
+                                                            <p class="mb-1">Country</p>
+                                                            <p class="">{{listVendors.country}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                                    </div>
+</form>
+
+
+            </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="viewDpModal" tabindex="-1" role="dialog" aria-labelledby="viewDpModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+<center>
+            {% if listVendors.profile == None or listVendors.profile == '' %}
+            <img width="320" height="320" src="/media/dp.jpg" alt="">
+            {% else %}
+            <img width="320" height="320" src="/media/{{listVendor.profile}}" alt="">
+            {% endif %}
+</center>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript">
+        $('#searchVendor').on('submit', function(e){
+        e.preventDefault();
+
+        var fields = $("#searchVendor")
+var countrySelected = $('#country').val();
+
+      $.ajax({
+           type : "POST",
+           url: "{% url 'buy' %}",
+           data: fields.serialize(),
+           success: function(data){
+          //countrySelected: $('#country').val()
+
+    //        alert("Update Was Successful");
+            $('#output').html(data.msg)
+
+            var ckStatus = data.status
+
+            if(ckStatus == 1)
+            {
+              window.location = "/buy/search/" + countrySelected;
+            }
+
+           },
+
+           failure: function() {
+               alert("Something went wrong");
+           }
+
+
+       });
+
+            });
+    </script>
+
+<script type="text/javascript">
+/*
+$("#minimum").keyup(function(){
+  var price = Number($(this).val());
+  var total = (price) * 0.3;
+  $(#calResult).val(total);
+});
+*/
+</script>
+
+<script>
+function myFunction() {
+  var w = document.getElementById("minimum").value;
+  var x = parseInt('1000', 10);
+  var y = parseInt({{listVendors.selling_at}})/100;
+  var z = parseInt(w * y);
+  var a = parseInt(w) - parseInt(z);
+  var b = a;
+  document.getElementById("calResult").innerHTML = a;
+}
+
+</script>
+
+  {% endblock %}

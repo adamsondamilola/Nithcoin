@@ -1,0 +1,126 @@
+<div class="modal fade" id="paymentMethodModal" tabindex="-1" role="dialog" aria-labelledby="paymentMethodModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+<div id="output"></div>
+<div class="card-body">
+  <p>Mode of Payment</p>
+  <form method="POST" action="/settings/vendor" id="paymentMethod">
+    <input type="hidden" name="paymentmode" value="paymentmode">
+        {% csrf_token %}
+
+                                <ul class="list-group">
+                                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                                      Bank
+                                        <div class="custom-control custom-switch">
+                                                                  <input type="checkbox" class="custom-control-input switch-primary" id="bank" name="bank" {% if payBank.method == 'Bank' %}checked=''{% endif %}>
+                                                                  <label class="custom-control-label" for="bank"></label>
+                                                              </div>
+                                  </li>
+
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Bitcoin
+                                          <div class="custom-control custom-switch">
+                                                                    <input type="checkbox" class="custom-control-input switch-primary" id="bitcoin" name="bitcoin" {% if payBitcoin.method == 'Bitcoin' %}checked=''{% endif %}>
+                                                                    <label class="custom-control-label" for="bitcoin"></label>
+                                                                </div>
+                                    </li>
+
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Chipper Cash
+                                          <div class="custom-control custom-switch">
+                                                                    <input type="checkbox" class="custom-control-input switch-primary" id="chipper_cash" name="chipper_cash" {% if payChipper.method == 'Chipper Cash' %}checked=''{% endif %}>
+                                                                    <label class="custom-control-label" for="chipper_cash"></label>
+                                                                </div>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Etherium
+                                          <div class="custom-control custom-switch">
+                                                                    <input type="checkbox" class="custom-control-input switch-primary" id="etherium" name="etherium" {% if payEtherium.method == 'Etherium' %}checked=''{% endif %}>
+                                                                    <label class="custom-control-label" for="etherium"></label>
+                                                                </div>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Mobile Money
+                                          <div class="custom-control custom-switch">
+                                                                    <input type="checkbox" class="custom-control-input switch-primary" id="mobile_money" name="mobile_money" {% if payMobile.method == 'Mobile Money' %}checked=''{% endif %}>
+                                                                    <label class="custom-control-label" for="mobile_money"></label>
+                                                                </div>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Nithcoin
+                                          <div class="custom-control custom-switch">
+                                                                    <input type="checkbox" class="custom-control-input switch-primary" id="customSwitc5" checked>
+                                                                    <label class="custom-control-label" for="customSwitch5"></label>
+                                                                </div>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        PayPal
+                                          <div class="custom-control custom-switch">
+                                                                    <input type="checkbox" class="custom-control-input switch-primary" id="paypal" name="paypal" {% if payPayPal.method == 'PayPal' %}checked=''{% endif %}>
+                                                                    <label class="custom-control-label" for="paypal"></label>
+                                                                </div>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Payza
+                                          <div class="custom-control custom-switch">
+                                                                    <input type="checkbox" class="custom-control-input switch-primary" id="payza" name="payza" {% if payPayza.method == 'Payza' %}checked=''{% endif %}>
+                                                                    <label class="custom-control-label" for="payza"></label>
+                                                                </div>
+                                    </li>
+                                </ul>
+
+                                <div class="col">
+                                <br><button type="submit" class="btn btn-primary btn-lg btn-block">Confirm Changes</button>
+                                </div>
+
+                                </form>
+                            </div>
+
+
+<br>
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--- For Ajax Form  --->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+
+<script type="text/javascript">
+    $('#paymentMethod').on('submit', function(e){
+    e.preventDefault();
+
+    var fields = $("#paymentMethod")
+
+  $.ajax({
+       type : "POST",
+       url: "/settings/vendor",
+       data: fields.serialize(),
+       success: function(data){
+        alert("Update Was Successful");
+        $('#output').html(data.msg)
+
+        var ckStatus = data.status
+/*
+        if(ckStatus == 1)
+        {
+          window.location = "/settings/vendor";
+        }
+*/
+       },
+
+       failure: function() {
+           alert("Something went wrong");
+       }
+
+   });
+
+        });
+</script>

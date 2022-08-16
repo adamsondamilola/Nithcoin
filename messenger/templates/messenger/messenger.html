@@ -1,0 +1,240 @@
+{% extends 'dashboard/layout.html' %}
+
+{% block content %}
+
+
+{% load static %}
+
+        <div class="main-container">
+            <!-- page content start -->
+<div class="col-12 col-md-12 col-lg-12">
+                {% for message in messages %}
+                {{ message|safe }}
+                {% endfor %}
+</div>
+
+
+
+
+                          <div class="col-12 col-md-12 col-lg-12">
+
+                            <div class="container">
+                                            <div class="row text-center mt-3">
+                                                <div class="col-12 col-md-8">
+                                                    <div class="card border-0 mb-4">
+                                                        <div class="card-body">
+
+                                                          <div class="card border-0 mb-4">
+                                                              <div class="card-body">
+                                                                <ul class="nav nav-pills flex-column" id="loadPage">
+{% if parentId %}
+{% for vm in viewMsg %}
+
+{% if vm.user_id == id and vm.sender_id == id %}
+<li class="list-group-item text-left">
+                               <div class="row align-items-center">
+                                   <div class="col-auto pr-0">
+                                       <div class="avatar avatar-40 rounded">
+                                           <div class="background">
+                                             {% if snd.profile == None or snd.profile == '' %}
+                   <img src="/media/dp.jpg" alt="">
+                   {% else %}
+                   <img src="/media/{{snd.profile}}" alt="">
+                                             {% endif %}
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="col align-self-center pr-0">
+                                       <strong class="small text-info">{{snd.firstname}} {{snd.firstname}}</strong>
+                                       {% if vm.photo ==  None or vm.photo ==  '' %}
+                                       {% else %}
+                                       <p><a href="/media/{{vm.photo}}" target="_blank"><span class="material-icons icon">wallpaper</span>{{vm.photo}}</a></p>
+                                       {% endif %}
+                                       <p class="normal text-dark">{{vm.message|linebreaks}}<br><span class="small text-secondary">{{vm.date_added}}</span></p>
+                                   </div>
+                               </div>
+                           </li>
+{% else %}
+<li class="list-group-item text-right bg-light">
+                               <div class="row align-items-center">
+                                   <div class="col-auto pr-0">
+                                       <div class="avatar avatar-40 rounded">
+                                           <div class="background">
+<!--                                             {% if recv.profile == None or recv.profile == '' %}
+                                             <img src="/media/dp.jpg" alt="">
+                                             {% else %}
+                                             <img src="/media/{{recv.profile}}" alt="">
+                                             {% endif %} -->
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="col align-self-center pr-0">
+<!--                                       <strong></strong>-->
+{% if vm.photo ==  None or vm.photo ==  '' %}
+{% else %}
+<p><a href="/media/{{vm.photo}}" target="_blank"><span class="material-icons icon">wallpaper</span>{{vm.photo}}</a></p>
+{% endif %}
+                                       <p class="normal text-secondary">{{vm.message|linebreaks}}<br><span class="small text-secondary">{{vm.date_added}}</span></p>
+                                   </div>
+                               </div>
+                           </li>
+{% endif %}
+
+                                                                                             {% endfor %}
+                                                                                             {% endif %}
+                                                                               </ul>
+                                                              </div>
+                                                          </div>
+
+<form method="POST" id="postForm" action="" enctype="multipart/form-data">
+                                                          {% csrf_token %}
+                                                          <input type="hidden" name="posting" value="posting">
+                                                          <input type='file' id="getFile" name="photo" style="display:none" accept="image/x-png,image/gif,image/jpeg;capture=camera" onchange="preview_image(event)">
+                                                            <div class="form-group float-label position-relative">
+                                                                                        <textarea name="message" class="form-control" rows="3"></textarea>
+                                                                                        <label class="form-control-label">Enter message</label>
+                                                            </div>
+                                                            <ul class="list-group list-group-flush">
+                                                                <li class="list-group-item">
+                                                                    <div class="row align-items-left">
+                                                                        <div class="col-auto pr-0">
+                                                                            <div class="avatar avatar-40 rounded">
+                                                                                <div class="background">
+
+                                                      <span onclick="document.getElementById('getFile').click()" class="material-icons icon">wallpaper</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col align-self-left pr-0">
+                                                                        </div>
+                                                                        <div class="col-auto">
+                                                                          <img id="output_image" src="/static/dashboard/img/blank.png" width="50" height="50" alt="">
+      <button type="submit" class="btn btn-info">Send</button>
+      <div id="output"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+
+</form>
+
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-4">
+                                                    <div class="card border-0 text-left mb-4">
+                                                        <div class="card-body">
+                                                          <ul class="nav nav-pills flex-column">
+                                                                           <li class="nav-item">
+                                                                             <a class="nav-link {% if request.path == '/messenger/inbox' or request.path == '/messenger/inbox/' %}active{% endif %}" href="/messenger/inbox">
+                                                                                 <div>
+                                                                                     <span class="material-icons icon">inbox</span>
+                                                                                     Inbox
+                                                                                 </div>
+                                                                             </a>
+                                                                         </li>
+                                                                         <li class="nav-item">
+                                                                             <a class="nav-link {% if request.path == '/messenger/sent' or request.path == '/messenger/sent/' %}active{% endif %}" href="/messenger/sent">
+                                                                                 <div>
+                                                                                     <span class="material-icons icon">send</span>
+                                                                                     Sent
+                                                                                 </div>
+                                                                             </a>
+                                                                         </li>
+                                                                         <li class="nav-item">
+                                                                             <a class="nav-link {% if request.path == '/messenger/requests' or request.path == '/messenger/requests/' %}active{% endif %}" href="/messenger/requests">
+                                                                                 <div>
+                                                                                     <span class="material-icons icon">perm_contact_calendar</span>
+                                                                                     Requests
+                                                                                 </div>
+                                                                             </a>
+                                                       </li>
+                                                                         </ul>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+            </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="viewDpModal" tabindex="-1" role="dialog" aria-labelledby="viewDpModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+<center>
+            {% if listVendors.profile == None or listVendors.profile == '' %}
+            <img width="320" height="320" src="/media/dp.jpg" alt="">
+            {% else %}
+            <img width="320" height="320" src="/media/{{listVendor.profile}}" alt="">
+            {% endif %}
+</center>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript">
+        $('#postForm').on('submit', function(e){
+        e.preventDefault();
+
+        var fields = $("#postForm")
+
+      $.ajax({
+           type : "POST",
+           url: "",
+           data: fields.serialize(),
+           success: function(data){
+          //countrySelected: $('#country').val()
+
+    //        alert("Update Was Successful");
+            $('#output').html(data.msg)
+            $("#postForm")[0].reset();
+            location.reload();
+            //$('#loadPage').load('/buy');
+
+           },
+
+           failure: function() {
+               alert("Something went wrong");
+           }
+
+
+       });
+
+            });
+    </script>
+
+    <!--Preview Image--->
+    <script type='text/javascript'>
+    function preview_image(event)
+    {
+     var reader = new FileReader();
+     reader.onload = function()
+     {
+      var outputImg = document.getElementById('output_image');
+      outputImg.src = reader.result;
+     }
+     reader.readAsDataURL(event.target.files[0]);
+    }
+    </script>
+
+    <script type="text/javascript">
+      function postFunction() {
+      document.getElementById("postForm").submit();
+    }
+    </script>
+
+  {% endblock %}

@@ -1,0 +1,117 @@
+<div class="modal fade" id="buySellModal" tabindex="-1" role="dialog" aria-labelledby="buySellModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+
+<form method="POST" action="" id="buySell">
+      {% csrf_token %}
+<input type="hidden" name="buy_sell" value="buy_sell">
+
+<span>Minimum you can buy and sell</span>
+
+<div class="input-group mb-3">
+<div class="input-group-prepend">
+<span class="input-group-text">USD</span>
+</div>
+<input type="number" class="form-control" value="{% if getVendor.minimum == None or getVendor.minimum == 0 %}{% else %}{{getVendor.minimum}}{% endif %}" placeholder="Minimum Amount" name="minimum" id="minimum" oninput="calcFunction()">
+</div>
+
+<div class="input-group mb-3">
+<div class="input-group-prepend">
+<span class="input-group-text">NTC</span>
+</div>
+<input type="text" class="form-control" value="" placeholder="Amount in NTC" id="calResult" readonly>
+</div>
+
+<span>Profit on Selling (In Percentage)</span>
+<div class="input-group mb-3">
+&nbsp; <input value="{% if getVendor.selling_at == None or getVendor.selling_at == 0 %}0{% else %}{{getVendor.selling_at}}{% endif %}"
+name="selling_at" type="range" min="0" max="20" oninput="this.nextElementSibling.value = this.value">
+<output>{% if getVendor.selling_at == None or getVendor.selling_at == 0 %}0{% else %}{{getVendor.selling_at}}{% endif %} % </output>
+</div>
+
+
+
+<span>Profit on Buying (In Percentage)</span>
+<div class="input-group mb-3">
+&nbsp; <input value="{% if getVendor.buying_at == None or getVendor.buying_at == 0 %}0{% else %}{{getVendor.buying_at}}{% endif %}"
+name="buying_at" type="range" min="0" max="20" oninput="this.nextElementSibling.value = this.value">
+<output>{% if getVendor.buying_at == None or getVendor.buying_at == 0 %}0{% else %}{{getVendor.buying_at}}{% endif %} % </output>
+</div>
+
+</div>
+<div class="col">
+  <div id="outputr"></div>
+<button type="submit" class="btn btn-primary btn-lg btn-block">Update</button>
+</div>
+<br><br>
+</form>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--- For Ajax Form  --->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<script type="text/javascript">
+  function calcFunction()
+  {
+      var p1 = $('#minimum').val();
+      var p2 = {{current_price.usd}}
+      if(p1=='' || p2=='')
+      {
+          alert('Please enter minimum amount');
+      }
+      else
+      {
+          var p3 = p1/p2;
+          $('#calResult').val(p3);
+      }
+  }
+</script>
+
+<script type="text/javascript">
+/*
+var p1 = $('#minimum').val();
+var p2 = 100;
+$('#calResult').val( ((p1/p2)*100)-100);
+*/
+    $('#buySell').on('submit', function(e){
+    e.preventDefault();
+
+    var fields = $("#buySell")
+
+  $.ajax({
+       type : "POST",
+       url: "/settings/vendor",
+       data: fields.serialize(),
+       success: function(data){
+//        alert("Update Was Successful");
+        $('#outputr').html(data.msg)
+
+       },
+
+       failure: function() {
+           alert("Something went wrong");
+       }
+
+   });
+
+        });
+
+
+
+  $('.toAdd').live('change', function() {
+  var total = 0;
+
+  $('.toAdd').each(function () {
+    total += $(this).val();
+  });
+
+  $('#total').val(total);
+});
+</script>

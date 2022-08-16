@@ -1,0 +1,24 @@
+<div class="modal fade" id="addNumberModal" tabindex="-1" role="dialog" aria-labelledby="addNumberModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+        <form method="POST" action="">
+              {% csrf_token %}
+        <input type="hidden" name="new_account" value="new_account">
+
+        <div class="input-group mb-3">
+        <div class="input-group-prepend">
+        <span class="input-group-text">Label</span>
+        </div>
+        <input type="text" class="form-control" placeholder="Enter Label" name="label" id="label">
+        </div>
+        <div class="col">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Create New</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

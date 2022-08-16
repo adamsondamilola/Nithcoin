@@ -1,0 +1,100 @@
+<div class="modal fade" id="resetPinModal" tabindex="-1" role="dialog" aria-labelledby="resetPinModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+{% if userWallet.pin == '' or userWallet.pin == None %}
+<form method="POST" action="/settings/vendor">
+      {% csrf_token %}
+<input type="hidden" name="new_pin" value="new_pin">
+
+<div class="input-group mb-3">
+<div class="input-group-prepend">
+<span class="input-group-text"><span class="material-icons">screen_lock_portrait</span></span>
+</div>
+<input maxlength="4" type="password" class="form-control" placeholder="New PIN" aria-label="New PIN" name="pin1">
+</div>
+
+<div class="input-group mb-3">
+<div class="input-group-prepend">
+<span class="input-group-text"><span class="material-icons">screen_lock_portrait</span></span>
+</div>
+<input maxlength="4" type="password" class="form-control" placeholder="Confirm PIN" aria-label="Confirm PIN" name="pin2">
+</div>
+<br>
+<button type="submit" class="btn btn-danger btn-lg btn-block">Create New PIN</button>
+</form>
+
+{% else %}
+
+<form method="POST" action="">
+      {% csrf_token %}
+<input type="hidden" name="reset_pin" value="reset_pin">
+
+<div class="input-group mb-3">
+<div class="input-group-prepend">
+<span class="input-group-text"><span class="material-icons">screen_lock_portrait</span></span>
+</div>
+<input maxlength="4" type="password" class="form-control" placeholder="Old PIN" aria-label="Old PIN" name="pin">
+</div>
+
+<div class="input-group mb-3">
+<div class="input-group-prepend">
+<span class="input-group-text"><span class="material-icons">screen_lock_portrait</span></span>
+</div>
+<input maxlength="4" type="password" class="form-control" placeholder="New PIN" aria-label="New PIN" name="pin1">
+</div>
+
+<div class="input-group mb-3">
+<div class="input-group-prepend">
+<span class="input-group-text"><span class="material-icons">screen_lock_portrait</span></span>
+</div>
+<input maxlength="4" type="password" class="form-control" placeholder="Confirm New PIN" aria-label="Confirm PIN" name="pin2">
+</div>
+<br>
+<div id="output"></div>
+<br>
+<button type="submit" class="btn btn-danger btn-lg btn-block">Change PIN</button>
+</form>
+
+
+{% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--- For Ajax Form  --->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript">
+    $('#resetPin').on('submit', function(e){
+    e.preventDefault();
+
+    var fields = $("#resetPin")
+
+  $.ajax({
+       type : "POST",
+       url: "/settings/vendor",
+       data: fields.serialize(),
+       success: function(data){
+//        alert("Update Was Successful");
+        $('#output').html(data.msg)
+
+        var ckStatus = data.status
+
+        if(ckStatus == 1)
+        {
+          window.location = "/settings/vendor";
+        }
+
+       },
+
+       failure: function() {
+           alert("Something went wrong");
+       }
+
+   });
+
+        });
+</script>
